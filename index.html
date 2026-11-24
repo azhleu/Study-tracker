@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ce2626">
+  <meta name="description" content="S.T.U.D.Y. helps Grade 9 students organize school tasks, schedules, and study routines.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <title>S.T.U.D.Y. | Student Study Planner</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #0f172a;
+      background: #f8fafc;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    .site-nav { background: #fff; border-bottom: 1px solid #e2e8f0; }
+    .nav-inner, main, footer { width: min(1040px, calc(100% - 40px)); margin: 0 auto; }
+    .nav-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 9px; background: #ce2626; color: #fff; font-weight: 800; font-size: 20px; }
+    .brand-name { margin: 0; font-size: 17px; line-height: 1.2; color: #1e3a8a; }
+    .brand-caption { margin: 3px 0 0; color: #64748b; font-size: 11px; }
+    .nav-cta, .primary-cta { display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 5px; background: #2563eb; color: #fff; font-size: 14px; font-weight: 700; padding: 11px 17px; }
+    .nav-cta:hover, .primary-cta:hover { background: #1d4ed8; }
+    main { padding: 45px 0 55px; }
+    .intro { padding: 25px 0 35px; }
+    .eyebrow { color: #1d4ed8; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    h2 { max-width: 700px; margin: 10px 0 12px; font-size: clamp(36px, 6vw, 54px); line-height: 1.1; letter-spacing: -.04em; }
+    .intro-copy { max-width: 670px; margin: 0 0 23px; color: #475569; font-size: 16px; }
+    .features { padding-top: 20px; }
+    .features h3 { margin: 0 0 5px; font-size: 23px; }
+    .features-lead { margin: 0 0 20px; color: #64748b; font-size: 14px; }
+    .tool-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .tool { min-height: 150px; padding: 19px; border: 1px solid #e2e8f0; background: #fff; }
+    .tool h4 { margin: 0 0 7px; color: #1e3a8a; font-size: 16px; }
+    .tool p { margin: 0; color: #475569; font-size: 13px; }
+    .bottom-cta { margin-top: 27px; padding: 20px; display: flex; align-items: center; justify-content: space-between; gap: 18px; border: 1px solid #bfdbfe; background: #eff6ff; }
+    .bottom-cta p { margin: 0; color: #1e3a8a; font-size: 14px; font-weight: 600; }
+    footer { padding: 20px 0 28px; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 12px; }
+    @media (max-width: 650px) {
+      .nav-inner, main, footer { width: min(100% - 28px, 1040px); }
+      .nav-inner { min-height: 64px; }
+      .nav-cta { padding: 9px 11px; font-size: 12px; }
+      .tool-grid { grid-template-columns: 1fr; }
+      .tool { min-height: 0; }
+      .bottom-cta { align-items: flex-start; flex-direction: column; }
+      main { padding-top: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="brand" href="./index.html" aria-label="S.T.U.D.Y. home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>
+          <strong class="brand-name">S.T.U.D.Y.</strong>
+          <span class="brand-caption" style="display:block">Student Time Updates &amp; Daily Yield-tracker</span>
+        </span>
+      </a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="intro">
+      <span class="eyebrow">A study planner for Grade 9</span>
+      <h2>Keep schoolwork in one place.</h2>
+      <p class="intro-copy">S.T.U.D.Y. helps you keep track of assignments, plan study time, and see your progress. Add what you need to do, then work through it at your own pace.</p>
+      <a class="primary-cta" href="./planner.html">Go to my planner <span aria-hidden="true">&nbsp;→</span></a>
+    </section>
+
+    <section class="features" aria-labelledby="features-title">
+      <h3 id="features-title">The three core tools</h3>
+      <p class="features-lead">A simple setup for Grade 9 schoolwork.</p>
+      <div class="tool-grid">
+        <article class="tool">
+          <h4>1. School Task Checklist</h4>
+          <p>Keep track of assignments and projects, set priorities, and work through tasks one step at a time.</p>
+        </article>
+        <article class="tool">
+          <h4>2. Homework Calendar</h4>
+          <p>Keep assignment, quiz, and test dates together so you can see what is coming up.</p>
+        </article>
+        <article class="tool">
+          <h4>3. Focus &amp; Study Routine</h4>
+          <p>Use a focus timer, choose your own study pace, and track completed tasks and your personal streak.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>S.T.U.D.Y. · Student Time Updates &amp; Daily Yield-tracker</footer>
+  <script>
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js').catch(function(error) {
+          console.error('Could not enable offline support.', error);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
