@@ -1,0 +1,2804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S.T.U.D.Y. Study Planner</title>
+  <meta name="description" content="A study planner for Grade 9 students to organize assignments, plan study time, and track weekly progress.">
+  <meta name="theme-color" content="#ce2626">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <style>
+    /* ===================================================================
+       1. GLOBAL RESET & BASE TYPOGRAPHY
+       =================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    /* Container */
+    .site-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===================================================================
+       2. TOP NAVBAR
+       =================================================================== */
+    .site-nav {
+      background: #ce2626;
+      border-bottom: 1px solid #bfdbfe;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.05);
+    }
+    .site-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .site-logo {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      color: #ffffff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+    .site-brand-text h1 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1e3a8a;
+      line-height: 1.2;
+    }
+    .site-brand-text p {
+      font-size: 11px;
+      color: #64748b;
+    }
+    .site-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .site-nav-links a {
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      transition: color 0.15s;
+    }
+    .site-nav-links a:hover {
+      color: #2563eb;
+    }
+    .site-nav-btn {
+      background: #2563eb;
+      color: #ffffff !important;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+      transition: background 0.15s, transform 0.1s;
+      cursor: pointer;
+      border: none;
+    }
+    .site-nav-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    /* ===================================================================
+       3. HERO SECTION (With "Explore Now")
+       =================================================================== */
+    .hero-section {
+      padding: 56px 0 40px 0;
+      background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      border-bottom: 1px solid #bfdbfe;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: #dbeafe;
+      color: #1e40af;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+    .hero-title {
+      font-size: 40px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .hero-desc {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .hero-btn-primary {
+      background: #2563eb;
+      color: #ffffff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+      transition: background 0.15s, transform 0.1s;
+    }
+    .hero-btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+    .hero-btn-secondary {
+      background: #ffffff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+    .hero-btn-secondary:hover {
+      background: #eff6ff;
+    }
+    .hero-trust-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 20px;
+    }
+    .hero-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-trust-check {
+      color: #059669;
+      font-weight: 800;
+    }
+
+    /* Hero Preview Card */
+    .hero-card-preview {
+      background: #ffffff;
+      border: 2px solid #bfdbfe;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.1);
+      position: relative;
+    }
+    .hero-card-badge {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: #1e3a8a;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      text-transform: uppercase;
+    }
+
+    /* ===================================================================
+       4. THREE CORE TOOLS SECTION
+       =================================================================== */
+    .section-tools {
+      padding: 60px 0;
+    }
+    .section-header {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 40px auto;
+    }
+    .section-tag {
+      font-size: 12px;
+      font-weight: 800;
+      color: #2563eb;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 8px 0 12px 0;
+    }
+    .section-subtitle {
+      font-size: 14px;
+      color: #64748b;
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .tool-box {
+      background: #ffffff;
+      border: 1px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.04);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .tool-box:hover {
+      transform: translateY(-3px);
+      border-color: #2563eb;
+    }
+    .tool-icon-wrapper {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .tool-box h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+    }
+    .tool-box p {
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    /* ===================================================================
+      5. JUNIOR HIGH STUDY PATHWAY
+       =================================================================== */
+    .section-pathways {
+      padding: 50px 0;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .pathways-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 30px;
+    }
+    .pathway-card {
+      border: 1px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 24px;
+      background: #f8fafc;
+    }
+    .pathway-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .pathway-tag {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .pathway-tag-jh {
+      background: #dbeafe;
+      color: #1e3a8a;
+    }
+    .pathway-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    .pathway-card p {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 14px;
+    }
+    .pathway-card ul {
+      list-style: none;
+      font-size: 12px;
+      color: #334155;
+    }
+    .pathway-card li {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ===================================================================
+       6. THE HABIT ADVANTAGE BANNER
+       =================================================================== */
+    .section-habits {
+      padding: 60px 0;
+    }
+    .habits-banner {
+      background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+      border-radius: 20px;
+      color: #ffffff;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(30, 58, 138, 0.2);
+    }
+    .habits-banner h2 {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .habits-banner p {
+      font-size: 13px;
+      color: #bfdbfe;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .habits-cta-card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 24px;
+      color: #0f172a;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+    .habits-cta-card h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    .habits-cta-card p {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    /* ===================================================================
+       7. INTERACTIVE PORTAL WRAPPER & SCOPED APP STYLES
+       =================================================================== */
+    #study-portal-section {
+      padding: 40px 0 60px 0;
+      scroll-margin-top: 80px;
+    }
+    .portal-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid #bfdbfe;
+    }
+    .portal-section-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1e3a8a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .portal-highlight-pulse {
+      animation: portalPulse 1.5s ease-out;
+    }
+    @keyframes portalPulse {
+      0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6); }
+      70% { box-shadow: 0 0 0 20px rgba(37, 99, 235, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    }
+
+    .study-portal-wrapper {
+      background: #ffffff;
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.07);
+    }
+    .sp-header {
+      background: #ffffff;
+      border: 1px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 14px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.04);
+    }
+    .sp-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sp-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    }
+    .sp-card {
+      background: #ffffff;
+      border: 1px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.05);
+    }
+    .sp-btn-primary {
+      background-color: #2563eb;
+      color: #ffffff;
+      font-weight: 700;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.15s, transform 0.1s;
+    }
+    .sp-btn-primary:hover {
+      background-color: #1d4ed8;
+    }
+    .sp-btn-secondary {
+      background-color: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 600;
+      border: 1px solid #bfdbfe;
+      padding: 7px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background-color 0.15s;
+    }
+    .sp-btn-secondary:hover {
+      background-color: #dbeafe;
+    }
+    .sp-nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      background: #e0edff;
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid #bfdbfe;
+    }
+    .sp-tab-btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: #1e40af;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .sp-tab-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    }
+    .sp-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      border: 3px solid #bfdbfe;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+      flex-shrink: 0;
+      position: relative;
+    }
+    .sp-avatar-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 22px;
+      height: 22px;
+      background: #1e3a8a;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 10px;
+    }
+    .sp-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .sp-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .sp-task-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      transition: all 0.15s ease;
+    }
+    .sp-task-row:hover {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+    .sp-task-row.done {
+      background: #f1f5f9;
+      opacity: 0.75;
+    }
+    .sp-task-row.done .sp-task-title {
+      text-decoration: line-through;
+      color: #94a3b8;
+    }
+    .sp-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      padding: 16px;
+    }
+    .sp-modal-content {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 480px;
+      width: 100%;
+      border: 1px solid #bfdbfe;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
+      overflow: hidden;
+      animation: spPop 0.2s ease-out;
+    }
+    @keyframes spPop {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .sp-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 24px 0;
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .habits-banner { grid-template-columns: 1fr; }
+      .hero-title { font-size: 28px; }
+      .site-nav-links { display: none; }
+    }
+
+    /* Planner-first layout: keep the workspace direct, quiet, and easy to scan. */
+    body {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    .site-nav {
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: none;
+    }
+    .site-nav-inner {
+      height: 58px;
+    }
+    .site-logo,
+    .site-nav-links a,
+    .section-pathways,
+    .section-habits,
+    .portal-section-header .sp-badge {
+      display: none;
+    }
+    .section-tools {
+      display: block;
+      padding: 38px 0 42px;
+      background: #eaf2ff;
+      border-top: 1px solid #d6e4fa;
+      border-bottom: 1px solid #d6e4fa;
+    }
+    .section-tools .section-header {
+      max-width: none;
+      margin: 0 0 22px;
+      text-align: left;
+    }
+    .section-tools .section-tag {
+      color: #2563eb;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+    .section-tools .section-title {
+      margin: 5px 0 6px;
+      color: #0f172a;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+    .section-tools .section-subtitle {
+      max-width: 600px;
+      color: #475569;
+    }
+    .section-tools .tools-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .section-tools .tool-box {
+      padding: 18px;
+      background: #fff;
+      border: 1px solid #d6e4fa;
+      border-radius: 6px;
+      box-shadow: none;
+      transition: none;
+    }
+    .section-tools .tool-box:hover {
+      transform: none;
+      border-color: #b6cef5;
+    }
+    .section-tools .tool-box h3 {
+      margin-bottom: 7px;
+      color: #1e3a8a;
+      font-size: 15px;
+    }
+    .section-tools .tool-box p {
+      color: #475569;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .site-brand-text h1 {
+      color: #1e3a8a;
+      font-size: 16px;
+    }
+    .site-brand-text p {
+      font-size: 10px;
+    }
+    .site-nav-btn {
+      background: #2563eb;
+      border-radius: 4px;
+      box-shadow: none;
+      padding: 7px 12px;
+      font-size: 12px;
+    }
+    .site-nav-btn:hover {
+      background: #1d4ed8;
+    }
+    .hero-section {
+      display: block;
+      padding: 72px 0 64px;
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .hero-grid {
+      display: block;
+    }
+    .hero-grid > div:first-child {
+      max-width: 700px;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: transparent;
+      color: #1d4ed8;
+      border: 0;
+      border-radius: 0;
+      padding: 0;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      max-width: 660px;
+      margin-bottom: 14px;
+      color: #0f172a;
+      font-size: clamp(34px, 5vw, 52px);
+      line-height: 1.12;
+      letter-spacing: -0.04em;
+    }
+    .hero-desc {
+      max-width: 600px;
+      margin-bottom: 22px;
+      color: #475569;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      margin-bottom: 0;
+    }
+    .hero-btn-primary {
+      background: #2563eb;
+      border-radius: 4px;
+      box-shadow: none;
+      padding: 11px 16px;
+      font-size: 14px;
+    }
+    .hero-btn-primary:hover {
+      background: #1d4ed8;
+      transform: none;
+    }
+    .hero-btn-secondary {
+      border-color: #cbd5e1;
+      border-radius: 4px;
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+    .hero-grid > div:nth-child(2),
+    .hero-trust-list {
+      display: none;
+    }
+    #study-portal-section {
+      padding: 20px 0 40px;
+    }
+    .portal-section-header {
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-color: #e2e8f0;
+    }
+    .portal-section-title {
+      color: #1e3a8a;
+      font-size: 17px;
+    }
+    .site-footer,
+    .sp-header .sp-brand {
+      display: none;
+    }
+    .study-portal-wrapper {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      grid-template-rows: auto auto 1fr;
+      column-gap: 28px;
+      align-items: start;
+      background: #fff;
+      border: 0;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+    .study-portal-wrapper .sp-header {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      justify-content: flex-end;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid #e2e8f0;
+      border-radius: 0;
+      padding: 8px 0 14px;
+      margin-bottom: 0;
+      box-shadow: none;
+    }
+    .sp-logo-icon {
+      display: none;
+    }
+    .sp-avatar {
+      width: 38px;
+      height: 38px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 0;
+      border-radius: 50%;
+      font-size: 15px;
+      box-shadow: none;
+    }
+    .study-portal-wrapper .sp-card {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      background: transparent;
+      border: 0 !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+      border-radius: 0;
+      padding: 16px 0;
+      margin: 0 0 16px;
+      box-shadow: none;
+    }
+    #sp-profile-card h2 + span {
+      display: none;
+    }
+    #sp-profile-card > div:nth-child(2) {
+      display: none !important;
+    }
+    .study-portal-wrapper .sp-btn-primary {
+      background: #2563eb !important;
+      border-radius: 4px;
+      padding: 7px 11px;
+      font-size: 12px;
+      box-shadow: none;
+    }
+    .study-portal-wrapper .sp-btn-primary:hover {
+      background: #1d4ed8 !important;
+    }
+    .study-portal-wrapper .sp-btn-secondary {
+      background: #fff !important;
+      color: #1d4ed8 !important;
+      border-color: #cbd5e1 !important;
+      border-radius: 4px;
+      padding: 6px 10px;
+    }
+    .study-portal-wrapper .sp-nav-tabs {
+      grid-column: 1;
+      grid-row: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      padding: 0;
+      margin: 0;
+      gap: 2px;
+    }
+    .study-portal-wrapper .sp-tab-btn {
+      color: #475569;
+      justify-content: flex-start;
+      border-radius: 4px;
+      padding: 9px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: left;
+    }
+    .study-portal-wrapper .sp-tab-btn.active {
+      background: #eff6ff;
+      color: #1d4ed8;
+      box-shadow: none;
+    }
+    #sp-view-overview,
+    #sp-view-tasks,
+    #sp-view-timer,
+    #sp-view-calendar,
+    #sp-view-reflection {
+      grid-column: 2;
+      grid-row: 3;
+      min-width: 0;
+    }
+    #sp-view-overview > .sp-grid-3 {
+      display: none;
+    }
+    #sp-view-overview > .sp-grid-2 {
+      display: block;
+      margin-bottom: 0 !important;
+    }
+    #sp-view-overview > .sp-grid-2 > .sp-card:first-child {
+      border: 1px solid #e2e8f0 !important;
+      padding: 16px;
+    }
+    #sp-view-overview > .sp-grid-2 > .sp-card:last-child {
+      display: none !important;
+    }
+    .study-portal-wrapper .sp-badge {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 0;
+      border-radius: 2px;
+    }
+    .study-portal-wrapper .sp-task-row {
+      background: #fff;
+      border-color: #e2e8f0;
+      border-radius: 3px;
+      box-shadow: none;
+    }
+    .study-portal-wrapper .sp-task-row:hover {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+    .sp-calendar-heading,
+    .sp-calendar-month-controls,
+    .sp-calendar-form-fields {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .sp-calendar-month-controls strong {
+      min-width: 132px;
+      text-align: center;
+      color: #1e3a8a;
+    }
+    .sp-calendar-weekdays,
+    .sp-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+      text-align: center;
+    }
+    .sp-calendar-weekdays {
+      margin: 18px 0 6px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .sp-calendar-day {
+      min-height: 76px;
+      padding: 7px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      background: #fff;
+      color: #0f172a;
+      cursor: pointer;
+      text-align: left;
+    }
+    .sp-calendar-day:hover,
+    .sp-calendar-day.selected {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+    .sp-calendar-day.today .sp-calendar-day-number {
+      color: #1d4ed8;
+      font-weight: 800;
+    }
+    .sp-calendar-day.other-month {
+      color: #94a3b8;
+      background: #f8fafc;
+    }
+    .sp-calendar-day-number {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .sp-calendar-day-event {
+      display: block;
+      overflow: hidden;
+      margin-top: 4px;
+      padding: 2px 4px;
+      border-radius: 2px;
+      background: #dbeafe;
+      color: #1e40af;
+      font-size: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .sp-calendar-agenda {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #e2e8f0;
+    }
+    .sp-calendar-events {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .sp-calendar-event-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 10px;
+      border-left: 3px solid #2563eb;
+      background: #f8fafc;
+      font-size: 13px;
+    }
+    .sp-calendar-event-time {
+      margin-right: 8px;
+      color: #64748b;
+      font-variant-numeric: tabular-nums;
+    }
+    .sp-calendar-empty {
+      margin: 0 0 14px;
+      color: #64748b;
+      font-size: 12px;
+    }
+    .sp-calendar-form {
+      padding: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+    .sp-calendar-form > label {
+      display: block;
+      margin-bottom: 8px;
+      color: #1e3a8a;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .sp-calendar-form input {
+      min-width: 0;
+      padding: 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .sp-calendar-form-fields input[type="text"] {
+      flex: 1;
+    }
+    .sp-calendar-status {
+      margin-top: 6px;
+      color: #b91c1c;
+      font-size: 12px;
+    }
+    .sp-modal-content {
+      border-color: #cbd5e1;
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+    }
+    .site-footer {
+      background: #fff;
+      border-color: #e2e8f0;
+    }
+    .site-footer p[style] {
+      color: #1e3a8a !important;
+    }
+    @media (max-width: 700px) {
+      .section-tools {
+        padding: 30px 0;
+      }
+      .section-tools .section-title {
+        font-size: 21px;
+      }
+      .section-tools .tools-grid {
+        grid-template-columns: 1fr;
+      }
+      .section-tools .tool-box,
+      .section-tools .tool-box:first-child,
+      .section-tools .tool-box:last-child {
+        padding: 15px;
+        border: 1px solid #d6e4fa;
+      }
+      .study-portal-wrapper {
+        display: block;
+      }
+      .portal-section-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .study-portal-wrapper .sp-nav-tabs {
+        flex-direction: row;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        border-bottom: 1px solid #e2e8f0;
+        margin-bottom: 16px;
+      }
+      .study-portal-wrapper .sp-tab-btn {
+        white-space: nowrap;
+      }
+      .study-portal-wrapper .sp-card {
+        padding: 12px 0;
+      }
+      .sp-calendar-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .sp-calendar-form-fields {
+        align-items: stretch;
+        flex-wrap: wrap;
+      }
+      .sp-calendar-form-fields input[type="text"] {
+        flex-basis: 100%;
+      }
+      .sp-calendar-day {
+        min-height: 62px;
+        padding: 5px;
+      }
+      #sp-profile-card > div:first-child {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px !important;
+      }
+      #sp-profile-card > div:first-child > div:last-child {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px !important;
+        padding-left: 0 !important;
+      }
+      #sp-profile-card > div:first-child > div:last-child > div:nth-child(even) {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================================================================
+       1. TOP NAVBAR
+       =================================================================== -->
+  <nav class="site-nav">
+    <div class="site-container site-nav-inner">
+      <div class="site-brand">
+        <div class="site-logo">S</div>
+        <div class="site-brand-text">
+          <h1>S.T.U.D.Y.</h1>
+          <p>Student Time Updates &amp; Daily Yield-tracker</p>
+        </div>
+      </div>
+
+      <div class="site-nav-links">
+        <a href="#features">Three Core Tools</a>
+        <a href="#pathways">Grade 9</a>
+        <a href="#habits">Habit Advantage</a>
+        <button onclick="scrollToPortal()" class="site-nav-btn">
+          <span>Launch Portal</span> &rarr;
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================================================================
+       2. HERO SECTION WITH "EXPLORE NOW"
+       =================================================================== -->
+  <section class="hero-section">
+    <div class="site-container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-tag">
+            A study planner for Grade 9
+          </div>
+
+          <h2 class="hero-title">
+            Keep schoolwork in one place.
+          </h2>
+
+          <p class="hero-desc">
+            S.T.U.D.Y. helps you keep track of assignments, plan study time, and see your progress through the week. Add what you need to do, then work through it at your own pace.
+          </p>
+
+          <div class="hero-actions">
+            <button onclick="scrollToPortal()" class="hero-btn-primary" id="hero-explore-btn">
+              <span>Go to my planner</span>
+              <span style="font-size: 18px;">&rarr;</span>
+            </button>
+          </div>
+
+          <div class="hero-trust-list">
+            <div class="hero-trust-item">
+              <span class="hero-trust-check">&#10003;</span>
+              <span>Made for Grade 9 schoolwork</span>
+            </div>
+            <div class="hero-trust-item">
+              <span class="hero-trust-check">&#10003;</span>
+              <span>2-Minute Homework Kickstart</span>
+            </div>
+            <div class="hero-trust-item">
+              <span class="hero-trust-check">&#10003;</span>
+              <span>Personal study streaks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Interactive Preview Card -->
+        <div>
+          <div class="hero-card-preview">
+            <div class="hero-card-badge">Your personal planner</div>
+            <h3 style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 0 0 8px;">Plan one step at a time.</h3>
+            <p style="font-size: 13px; color: #475569; margin: 0 0 14px;">Add your own assignments and deadlines. Your task list, completion progress, and streak start with your activity instead of sample data.</p>
+            <ul style="padding-left: 20px; color: #475569; font-size: 12px; line-height: 1.8;">
+              <li>Choose a priority and study-time estimate that suits you.</li>
+              <li>See due dates and your next suggested task.</li>
+              <li>Save a private backup or use the hosted page offline after its first visit.</li>
+            </ul>
+
+            <div style="margin-top: 16px;">
+              <button onclick="scrollToPortal()" class="sp-btn-primary" style="width: 100%; justify-content: center; padding: 10px;">
+                Open Interactive Workspace Below &darr;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       3. THREE CORE TOOLS SECTION
+       =================================================================== -->
+  <section class="section-tools" id="features">
+    <div class="site-container">
+      <div class="section-header">
+        <span class="section-tag">The three core tools</span>
+        <h2 class="section-title">A simple setup for Grade 9 schoolwork</h2>
+        <p class="section-subtitle">
+          Made for Grade 9 students. Keep assignments, study sessions, and deadlines organized in one place.
+        </p>
+      </div>
+
+      <div class="tools-grid">
+        <!-- Tool 1 -->
+        <div class="tool-box">
+          <h3>1. School Task Checklist</h3>
+          <p>Keep track of your assignments and projects, and work through them one step at a time.</p>
+        </div>
+
+        <!-- Tool 2 -->
+        <div class="tool-box">
+          <h3>2. Homework Calendar</h3>
+          <p>Keep assignment and test dates together so you can see what is coming up.</p>
+        </div>
+
+        <!-- Tool 3 -->
+        <div class="tool-box">
+          <h3>3. Focus &amp; weekly progress</h3>
+          <p>Use a focus timer at your own pace; completed tasks update your progress and streak.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+      4. JUNIOR HIGH STUDY PATHWAY
+       =================================================================== -->
+  <section class="section-pathways" id="pathways">
+    <div class="site-container">
+      <div class="section-header">
+      
+       <h2 class="section-title">Built for Junior High Academic Life</h2>
+        <p class="section-subtitle">
+          Stay on top of Grade 9 subjects, longer assignments, and upcoming exams.
+        </p>
+      </div>
+
+      <div class="pathways-grid">
+        <!-- Junior High -->
+        <div class="pathway-card">
+          <div class="pathway-header">
+            <span class="pathway-tag pathway-tag-jh">Grade 9</span>
+            <span style="font-size: 11px; color: #64748b;">Secondary Independence</span>
+          </div>
+          <h3>Junior High Academic Mastery</h3>
+          <p>Equip students to handle multiple subject teachers, quarterly performance tasks, lab reports, and examination schedules without cramming or stress.</p>
+          <ul>
+            <li>&#10003; 25-minute Pomodoro &amp; 50-minute deep study blocks</li>
+            <li>&#10003; 2-Minute rule to overcome homework procrastination</li>
+            <li>&#10003; Timeline planners for Science labs &amp; Math problem sets</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       5. THE HABIT ADVANTAGE BANNER
+       =================================================================== -->
+  <section class="section-habits" id="habits">
+    <div class="site-container">
+      <div class="habits-banner">
+        <div>
+          <span style="font-size: 11px; font-weight: 700; color: #fde047; text-transform: uppercase;">Junior High Study Skills</span>
+          <h2>Build Strong Study Habits for Junior High</h2>
+          <p>
+            Junior high brings multiple subject teachers, bigger projects, and more responsibility. Build a steady routine for planning assignments, starting difficult work, and preparing for exams without last-minute cramming.
+          </p>
+          <div style="font-size: 12px; color: #dbeafe; display: flex; flex-direction: column; gap: 6px;">
+            <div>&#10003; Keep track of deadlines across every subject</div>
+            <div>&#10003; Break projects into clear, achievable steps</div>
+            <div>&#10003; Build independence, time management, and focus</div>
+          </div>
+        </div>
+
+        <div class="habits-cta-card">
+          <h3>Ready to Start Your Study Session?</h3>
+          <p>
+            Jump into your dashboard to organize assignments, plan study sessions, and track your weekly progress.
+          </p>
+          <button onclick="scrollToPortal()" class="hero-btn-primary" style="width: 100%; justify-content: center;">
+            <span>Explore Portal Now</span> &rarr;
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       6. LIVE INTERACTIVE S.T.U.D.Y. STUDENT PORTAL (ALL FEATURES)
+       =================================================================== -->
+  <section id="study-portal-section">
+    <div class="site-container">
+      
+      <div class="portal-section-header">
+        <div class="portal-section-title">
+          <span>My study planner</span>
+        </div>
+        <span class="sp-badge">Grade 9 Workspace</span>
+      </div>
+
+      <div style="margin: 0 0 14px; padding: 14px; border: 1px solid #bfdbfe; background: #eff6ff; color: #1e3a8a; font-size: 13px;" role="note">
+        <strong>Saved on this device only.</strong> Your tasks and reflections stay in this browser and do not sync to your teacher or classmates. Use the backup buttons to move your data to another device. When hosted over HTTPS, the planner can be reopened offline after its first successful visit.
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 14px;">
+        <button type="button" class="sp-btn-secondary" onclick="spExportBackup()">Download my backup</button>
+        <button type="button" class="sp-btn-secondary" onclick="document.getElementById('sp-backup-file').click()">Restore a backup</button>
+        <input id="sp-backup-file" type="file" accept="application/json,.json" hidden onchange="spImportBackup(event)">
+        <button type="button" class="sp-btn-secondary" id="sp-reminder-permission-btn" onclick="spEnableReminders()">Enable deadline reminders</button>
+        <span id="sp-storage-status" role="status" aria-live="polite" style="font-size: 12px; color: #475569;"></span>
+      </div>
+
+      <details id="sp-first-use-guide" open style="margin-bottom: 14px; padding: 14px; border: 1px solid #e2e8f0; background: #fff;">
+        <summary style="cursor: pointer; color: #1e3a8a; font-weight: 700;">New here? Open the 1-minute guide</summary>
+        <ol style="margin: 10px 0 10px 22px; color: #475569; font-size: 13px;">
+          <li>Set your name with <strong>Customize Profile</strong> (a nickname is fine).</li>
+          <li>Add assignments with a due date, priority, and study-time estimate.</li>
+          <li>Start with the highest-priority task due soonest; use the timer or calendar when helpful.</li>
+          <li>Mark tasks complete to build your personal streak. Your information stays on this device.</li>
+          <li>Download a backup before changing devices or clearing browser data.</li>
+        </ol>
+        <p style="color: #475569; font-size: 12px;">Deadline alerts are checked while the planner is open or when you reopen it; they do not run while it is closed. For technical help, contact your teacher through your usual class channel. Shared class tracking and automatic cross-device sync need a school-approved online database and are not available in this version.</p>
+        <button type="button" class="sp-btn-secondary" onclick="spDismissGuide()">Got it</button>
+      </details>
+
+      <div id="study-app-root" class="study-portal-wrapper">
+        
+        <!-- Header: Student Profile & Stats -->
+        <header class="sp-header">
+          <div class="sp-brand">
+            <div class="sp-logo-icon">S</div>
+            <div>
+              <h3 style="font-size: 18px; font-weight: 800; color: #1e3a8a; margin: 0; line-height: 1.2;">S.T.U.D.Y.</h3>
+              <p style="font-size: 11px; color: #64748b; margin: 0;">Student Time Updates and Daily Yield-tracker</p>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button onclick="spOpenProfileModal()" class="sp-btn-secondary" style="font-size: 11px; padding: 5px 10px;">
+              Customize Profile
+            </button>
+          </div>
+        </header>
+
+        <!-- Profile Card -->
+        <div id="sp-profile-card" class="sp-card" style="border-left: 5px solid #2563eb;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+            
+            <!-- Student Avatar + Info -->
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <!-- Student Initials (Clean, NO AI images!) -->
+              <div class="sp-avatar" id="sp-avatar-display">
+                <span id="sp-avatar-initials">LE</span>
+              </div>
+
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <h2 id="sp-name-heading" style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 0;">
+                    Welcome, Learner!
+                  </h2>
+                  <span style="background: #dbeafe; color: #1e40af; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px;">
+                    Active Student
+                  </span>
+                </div>
+
+                <div style="font-size: 12px; color: #475569; margin-top: 4px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                  <span style="font-weight: 700; color: #1d4ed8;" id="sp-grade-display">Junior High School (Grade 9)</span>
+                  <span id="sp-section-separator" style="color: #cbd5e1; display: none;">&middot;</span>
+                  <span id="sp-section-display"></span>
+                  <span id="sp-adviser-separator" style="color: #cbd5e1; display: none;">&middot;</span>
+                  <span id="sp-adviser-display"></span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Metrics Counters -->
+            <div style="display: flex; align-items: center; gap: 20px; padding-left: 8px;">
+              <div style="text-align: center;">
+                <div style="font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase;">Study Streak</div>
+                <div id="sp-metric-streak" style="font-size: 24px; font-weight: 800; color: #2563eb; font-family: monospace;">0 <span style="font-size: 12px; font-weight: 500; color: #64748b;">days</span></div>
+              </div>
+              <div style="height: 32px; width: 1px; background: #e2e8f0;"></div>
+              <div style="text-align: center;">
+                <div style="font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase;">Task Completion</div>
+                <div id="sp-metric-yield" style="font-size: 24px; font-weight: 800; color: #1d4ed8; font-family: monospace;">0%</div>
+              </div>
+              <div style="height: 32px; width: 1px; background: #e2e8f0;"></div>
+              <div style="text-align: center;">
+                <div style="font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase;">Tasks Pending</div>
+                <div id="sp-metric-pending" style="font-size: 24px; font-weight: 800; color: #0f172a; font-family: monospace;">0 <span style="font-size: 12px; font-weight: 500; color: #64748b;">tasks</span></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Study Tip Banner -->
+          <div style="margin-top: 16px; padding: 10px 14px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: #1e3a8a;">
+            <div>
+              <strong id="sp-tip-title">Junior High Focus Rule:</strong>
+              <span id="sp-tip-body">Start with your highest-priority task due soonest. Break larger work into smaller steps and choose a study pace that works for you.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="sp-nav-tabs">
+          <button onclick="spSwitchTab('overview')" class="sp-tab-btn active" id="sp-tab-btn-overview">
+            Dashboard Overview
+          </button>
+          <button onclick="spSwitchTab('tasks')" class="sp-tab-btn" id="sp-tab-btn-tasks">
+            Schoolwork &amp; Tasks (<span id="sp-tab-task-count">0</span>)
+          </button>
+          <button onclick="spSwitchTab('timer')" class="sp-tab-btn" id="sp-tab-btn-timer">
+            Focus Sprint Timer
+          </button>
+          <button onclick="spSwitchTab('calendar')" class="sp-tab-btn" id="sp-tab-btn-calendar">
+            Homework Calendar
+          </button>
+          <button onclick="spSwitchTab('reflection')" class="sp-tab-btn" id="sp-tab-btn-reflection">
+            Weekly Reflection
+          </button>
+        </div>
+
+        <!-- TAB 1: DASHBOARD OVERVIEW -->
+        <div id="sp-view-overview">
+          <div class="sp-grid-3" style="margin-bottom: 20px;">
+            <div style="background: #ffffff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(37,99,235,0.04);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <span class="sp-badge">Tool 1</span>
+              </div>
+              <h4 style="font-size: 15px; font-weight: 700; color: #0f172a; margin: 0 0 4px 0;">School Task Checklist</h4>
+              <p style="font-size: 12px; color: #475569; margin: 0 0 12px 0; line-height: 1.4;">Break projects into 15-minute steps to beat procrastination.</p>
+              <button onclick="spSwitchTab('tasks')" class="sp-btn-secondary" style="width: 100%; justify-content: center;">Open Tasks &rarr;</button>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(37,99,235,0.04);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <span class="sp-badge">Tool 2</span>
+              </div>
+              <h4 style="font-size: 15px; font-weight: 700; color: #0f172a; margin: 0 0 4px 0;">Homework Calendar</h4>
+              <p style="font-size: 12px; color: #475569; margin: 0 0 12px 0; line-height: 1.4;">Plan exam schedules and submission deadlines ahead.</p>
+              <button onclick="spSwitchTab('calendar')" class="sp-btn-secondary" style="width: 100%; justify-content: center;">View Calendar &rarr;</button>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(37,99,235,0.04);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <span class="sp-badge">Tool 3</span>
+              </div>
+              <h4 style="font-size: 15px; font-weight: 700; color: #0f172a; margin: 0 0 4px 0;">Focus Timer</h4>
+              <p style="font-size: 12px; color: #475569; margin: 0 0 12px 0; line-height: 1.4;">Use a focus timer, then mark completed tasks to update your personal progress.</p>
+              <button onclick="spSwitchTab('timer')" class="sp-btn-secondary" style="width: 100%; justify-content: center;">Start Timer &rarr;</button>
+            </div>
+          </div>
+
+          <!-- Weekly Effort & Badges -->
+          <div class="sp-grid-2" style="margin-bottom: 20px;">
+            <div class="sp-card" style="margin-bottom: 0;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                <div>
+                  <h3 style="font-size: 15px; font-weight: 800; color: #0f172a; margin: 0;">Weekly Study Time</h3>
+                  <p style="font-size: 11px; color: #64748b; margin: 0;">Timer sessions are not recorded in this version.</p>
+                </div>
+                <span style="font-size: 12px; font-weight: 700; color: #64748b;">Timer minutes are not recorded</span>
+              </div>
+
+              <div style="display: flex; align-items: flex-end; justify-content: space-between; height: 140px; padding: 10px 0 4px 0; border-bottom: 1px solid #e2e8f0;">
+                <div style="flex: 1; text-align: center; margin: 0 3px;">
+                  <div style="font-size: 9px; font-family: monospace; color: #64748b;">0m</div>
+                  <div style="height: 0; background: #93c5fd; border-radius: 4px 4px 0 0; width: 100%;"></div>
+                  <div style="font-size: 10px; font-weight: 600; color: #64748b; margin-top: 4px;">Mon</div>
+                </div>
+                <div style="flex: 1; text-align: center; margin: 0 3px;">
+                  <div style="font-size: 9px; font-family: monospace; color: #64748b;">0m</div>
+                  <div style="height: 0; background: #93c5fd; border-radius: 4px 4px 0 0; width: 100%;"></div>
+                  <div style="font-size: 10px; font-weight: 600; color: #64748b; margin-top: 4px;">Tue</div>
+                </div>
+                <div style="flex: 1; text-align: center; margin: 0 3px;">
+                  <div style="font-size: 9px; font-family: monospace; color: #64748b;">0m</div>
+                  <div style="height: 0; background: #93c5fd; border-radius: 4px 4px 0 0; width: 100%;"></div>
+                  <div style="font-size: 10px; font-weight: 600; color: #64748b; margin-top: 4px;">Wed</div>
+                </div>
+                <div style="flex: 1; text-align: center; margin: 0 3px;">
+                  <div style="font-size: 9px; font-family: monospace; color: #64748b;">0m</div>
+                  <div style="height: 0; background: #93c5fd; border-radius: 4px 4px 0 0; width: 100%;"></div>
+                  <div style="font-size: 10px; font-weight: 600; color: #64748b; margin-top: 4px;">Thu</div>
+                </div>
+                <div style="flex: 1; text-align: center; margin: 0 3px;">
+                  <div style="font-size: 9px; font-family: monospace; color: #64748b;">0m</div>
+                  <div style="height: 0; background: #93c5fd; border-radius: 4px 4px 0 0; width: 100%;"></div>
+                  <div style="font-size: 10px; font-weight: 600; color: #64748b; margin-top: 4px;">Fri</div>
+                </div>
+                <div style="flex: 1; text-align: center; margin: 0 3px;">
+                  <div style="font-size: 9px; font-family: monospace; color: #64748b;">0m</div>
+                  <div style="height: 0; background: #bfdbfe; border-radius: 4px 4px 0 0; width: 100%;"></div>
+                  <div style="font-size: 10px; font-weight: 600; color: #64748b; margin-top: 4px;">Sat</div>
+                </div>
+                <div style="flex: 1; text-align: center; margin: 0 3px;">
+                  <div style="font-size: 9px; font-family: monospace; color: #64748b;">0m</div>
+                  <div style="height: 0; background: #bfdbfe; border-radius: 4px 4px 0 0; width: 100%;"></div>
+                  <div style="font-size: 10px; font-weight: 600; color: #64748b; margin-top: 4px;">Sun</div>
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: #64748b; margin-top: 10px;">
+                <span>Focus minutes are not saved in this version.</span>
+                <span style="font-weight: 700; color: #64748b;">Use tasks to track progress</span>
+              </div>
+            </div>
+
+            <!-- Consistency Card -->
+            <div class="sp-card" style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                  <h3 style="font-size: 15px; font-weight: 800; color: #0f172a; margin: 0;">Your consistency</h3>
+                  <span style="font-size: 10px; font-weight: 700; color: #1d4ed8; background: #eff6ff; padding: 2px 7px; border-radius: 8px;">Personal progress</span>
+                </div>
+
+                <div style="text-align: center; padding: 8px 0;">
+                  <h4 style="font-size: 14px; font-weight: 800; color: #1e3a8a; margin: 0 0 2px 0;">Build a steady routine</h4>
+                  <p style="font-size: 11px; color: #64748b; margin: 0;">Mark a task complete each day you study to maintain your streak.</p>
+                </div>
+              </div>
+
+              <div style="padding-top: 10px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around;">
+                <div style="text-align: center;">
+                  <div style="font-size: 10px; color: #64748b; text-transform: uppercase; font-weight: 700;">Current streak</div>
+                  <div id="sp-overview-streak" style="font-size: 20px; font-weight: 800; color: #2563eb;">0 days</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: TASKS -->
+        <div id="sp-view-tasks" style="display: none;">
+          <div class="sp-card">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+              <div>
+                <h3 style="font-size: 16px; font-weight: 800; color: #0f172a; margin: 0;">Schoolwork Agenda &amp; Checklist</h3>
+                <p style="font-size: 12px; color: #64748b; margin: 0;">High-priority tasks appear first; deadlines break ties. Choose study times that fit your own pace.</p>
+              </div>
+              <button onclick="spOpenAddTaskModal()" class="sp-btn-primary">+ Add New Task</button>
+            </div>
+
+            <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+              <button onclick="spFilterTasks('all')" id="sp-filter-all" class="sp-btn-primary" style="font-size: 11px; padding: 4px 10px;">All Tasks</button>
+              <button onclick="spFilterTasks('pending')" id="sp-filter-pending" class="sp-btn-secondary" style="font-size: 11px; padding: 4px 10px;">Pending</button>
+              <button onclick="spFilterTasks('done')" id="sp-filter-done" class="sp-btn-secondary" style="font-size: 11px; padding: 4px 10px;">Completed</button>
+            </div>
+
+            <div id="sp-tasks-list"></div>
+          </div>
+        </div>
+
+        <!-- TAB 3: TIMER -->
+        <div id="sp-view-timer" style="display: none;">
+          <div class="sp-card" style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <h3 style="font-size: 18px; font-weight: 800; color: #1e3a8a; margin: 0 0 6px 0;">Pomodoro Focus Sprint Timer</h3>
+            <p style="font-size: 12px; color: #64748b; margin: 0 0 20px 0;">Choose a focus block that fits your schedule. This version does not save timer minutes; completing tasks updates your progress.</p>
+
+            <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 24px;">
+              <button onclick="spSetTimerMinutes(25)" id="sp-timer-btn-25" class="sp-btn-primary" style="padding: 6px 14px;">25m Focus Sprint</button>
+              <button onclick="spSetTimerMinutes(15)" id="sp-timer-btn-15" class="sp-btn-secondary" style="padding: 6px 14px;">15m Review</button>
+              <button onclick="spSetTimerMinutes(5)" id="sp-timer-btn-5" class="sp-btn-secondary" style="padding: 6px 14px;">5m Break</button>
+            </div>
+
+            <form onsubmit="spSetCustomTimer(event)" style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin: -10px 0 22px;">
+              <label for="sp-custom-timer-minutes" style="font-size: 12px; font-weight: 700; color: #475569;">Custom minutes</label>
+              <input id="sp-custom-timer-minutes" type="number" min="1" max="180" step="1" required aria-describedby="sp-custom-timer-help" style="width: 88px; padding: 7px 8px; border: 1px solid #bfdbfe; border-radius: 6px; font-size: 13px;">
+              <button type="submit" id="sp-timer-btn-custom" class="sp-btn-secondary" style="padding: 6px 12px;">Set timer</button>
+              <span id="sp-custom-timer-help" style="flex-basis: 100%; font-size: 11px; color: #64748b;">Choose 1 to 180 minutes.</span>
+            </form>
+
+            <div style="background: #eff6ff; border: 2px solid #bfdbfe; border-radius: 20px; padding: 30px 20px; margin-bottom: 24px; box-shadow: inset 0 2px 6px rgba(37,99,235,0.06);">
+              <div id="sp-timer-display" style="font-size: 64px; font-weight: 800; font-family: monospace; color: #1d4ed8; letter-spacing: -0.02em;">
+                25:00
+              </div>
+              <div id="sp-timer-label" style="font-size: 13px; font-weight: 600; color: #2563eb; margin-top: 4px;">
+                Ready to focus!
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 12px;">
+              <button onclick="spToggleTimer()" id="sp-timer-toggle-btn" class="sp-btn-primary" style="padding: 10px 24px; font-size: 15px;">
+                Start Focus
+              </button>
+              <button onclick="spResetTimer()" class="sp-btn-secondary" style="padding: 10px 18px; font-size: 14px;">
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: CALENDAR -->
+        <div id="sp-view-calendar" style="display: none;">
+          <div class="sp-card">
+            <div class="sp-calendar-heading">
+              <div>
+                <h3 style="font-size: 16px; font-weight: 800; color: #0f172a; margin: 0;">My schedule</h3>
+                <p style="font-size: 12px; color: #64748b; margin: 0;">Select a day to add quizzes, assignments, and other events.</p>
+              </div>
+              <div class="sp-calendar-month-controls">
+                <button type="button" class="sp-btn-secondary" aria-label="Previous month" onclick="spChangeCalendarMonth(-1)">&larr;</button>
+                <strong id="sp-calendar-month-label"></strong>
+                <button type="button" class="sp-btn-secondary" aria-label="Next month" onclick="spChangeCalendarMonth(1)">&rarr;</button>
+              </div>
+            </div>
+
+            <div class="sp-calendar-weekdays" aria-hidden="true">
+              <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            </div>
+            <div id="sp-calendar-grid" class="sp-calendar-grid"></div>
+
+            <div class="sp-calendar-agenda">
+              <h4 id="sp-calendar-selected-date" style="font-size: 14px; margin: 0 0 10px;"></h4>
+              <div id="sp-calendar-events" class="sp-calendar-events"></div>
+              <form onsubmit="spAddCalendarEvent(event)" class="sp-calendar-form">
+                <label for="sp-calendar-event-title">Add to this day</label>
+                <div class="sp-calendar-form-fields">
+                  <input id="sp-calendar-event-title" type="text" maxlength="80" required>
+                  <input id="sp-calendar-event-time" type="time" aria-label="Event time (optional)">
+                  <button type="submit" class="sp-btn-primary">Add schedule</button>
+                </div>
+                <div id="sp-calendar-status" class="sp-calendar-status" role="status" aria-live="polite"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: REFLECTION -->
+        <div id="sp-view-reflection" style="display: none;">
+          <div class="sp-card">
+            <div style="margin-bottom: 16px;">
+              <h3 style="font-size: 16px; font-weight: 800; color: #0f172a; margin: 0;">Weekly Reflection &amp; Habit Journal</h3>
+              <p style="font-size: 12px; color: #64748b; margin: 0;">Reflecting reinforces what worked and keeps your mindset sharp for the coming week.</p>
+            </div>
+
+            <form onsubmit="spSaveReflection(event)">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+                <div>
+                  <label style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">
+                    1. Wins &amp; Highlights
+                  </label>
+                  <textarea id="sp-ref-wins" rows="3" placeholder="e.g. Submitted my PETAs on time and finished my assignments..." style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #bfdbfe; border-radius: 8px; font-family: inherit; resize: none;"></textarea>
+                </div>
+
+                <div>
+                  <label style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">
+                    2. Procrastination Roadblock
+                  </label>
+                  <textarea id="sp-ref-roadblock" rows="3" placeholder="e.g. Spent too much time scrolling phone before starting homework..." style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #bfdbfe; border-radius: 8px; font-family: inherit; resize: none;"></textarea>
+                </div>
+
+                <div>
+                  <label style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">
+                    3. Next Week's Goal
+                  </label>
+                  <textarea id="sp-ref-goal" rows="3" placeholder="e.g. Finish my assignments before their deadlines..." style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #bfdbfe; border-radius: 8px; font-family: inherit; resize: none;"></textarea>
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 14px;">
+                <span id="sp-ref-status" style="font-size: 12px; color: #059669; font-weight: 700; display: none;">
+                  &#10003; Reflection saved in this browser on this device.
+                </span>
+                <button type="submit" class="sp-btn-primary" style="margin-left: auto;">Save Reflection</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- MODAL: ADD TASK -->
+        <div id="sp-modal-add-task" class="sp-modal-backdrop">
+          <div class="sp-modal-content">
+            <div style="padding: 16px 20px; border-bottom: 1px solid #bfdbfe; background: #eff6ff; display: flex; align-items: center; justify-content: space-between;">
+              <h4 style="font-size: 15px; font-weight: 800; color: #1e3a8a; margin: 0;">Add School Assignment or Task</h4>
+              <button onclick="spCloseModals()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #64748b;">&times;</button>
+            </div>
+            <form onsubmit="spSubmitNewTask(event)" style="padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+              <div>
+                <label style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">Task Title</label>
+                <input type="text" id="sp-input-task-title" required placeholder="e.g. Quadratic Equations Worksheet" style="width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid #bfdbfe; border-radius: 8px;">
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                  <label style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">Subject</label>
+                  <select id="sp-input-task-subject" style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #bfdbfe; border-radius: 8px; background: #fff;">
+                    <option value="MAPEH">MAPEH</option>
+                    <option value="Filipino">Filipino</option>
+                    <option value="Science">Science</option>
+                    <option value="Religion">Religion</option>
+                    <option value="Araling Panlipunan">Araling Panlipunan</option>
+                    <option value="English/Research">English/Research</option>
+                    <option value="TLE">TLE</option>
+                    <option value="Math/Trigonometry">Math/Trigonometry</option>
+                    <option value="Computer">Computer</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">Estimated Time</label>
+                  <select id="sp-input-task-time" style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #bfdbfe; border-radius: 8px; background: #fff;">
+                    <option value="15m">15 mins</option>
+                    <option value="25m" selected>25 mins (Pomodoro)</option>
+                    <option value="30m">30 mins</option>
+                    <option value="45m">45 mins</option>
+                    <option value="60m">60 mins</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                  <label for="sp-input-task-due" style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">Deadline date</label>
+                  <input type="date" id="sp-input-task-due" style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #bfdbfe; border-radius: 8px;">
+                </div>
+                <div>
+                  <label for="sp-input-task-due-time" style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">Due time (optional)</label>
+                  <input type="time" id="sp-input-task-due-time" style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #bfdbfe; border-radius: 8px;">
+                </div>
+                </div>
+              </div>
+              <div>
+                <label for="sp-input-task-priority" style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">Priority</label>
+                <select id="sp-input-task-priority" style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #bfdbfe; border-radius: 8px; background: #fff;">
+                <option value="high">High - do first</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+                </select>
+              </div>
+              <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+                <button type="button" onclick="spCloseModals()" class="sp-btn-secondary">Cancel</button>
+                <button type="submit" class="sp-btn-primary">Add Task</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- MODAL: CUSTOMIZE PROFILE -->
+        <div id="sp-modal-profile" class="sp-modal-backdrop">
+          <div class="sp-modal-content">
+            <div style="padding: 16px 20px; border-bottom: 1px solid #bfdbfe; background: #eff6ff; display: flex; align-items: center; justify-content: space-between;">
+              <h4 style="font-size: 15px; font-weight: 800; color: #1e3a8a; margin: 0;">Customize Student Profile</h4>
+              <button onclick="spCloseModals()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #64748b;">&times;</button>
+            </div>
+
+            <form onsubmit="spSaveProfile(event)" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+              <!-- Initials Preview -->
+              <div style="display: flex; align-items: center; gap: 12px; padding: 10px; background: #eff6ff; border-radius: 10px; border: 1px solid #bfdbfe;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #2563eb; color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 16px;" id="sp-modal-initials-preview">
+                  L1
+                </div>
+                <div>
+                  <div style="font-size: 12px; font-weight: 700; color: #1e3a8a;">Profile</div>
+                </div>
+              </div>
+
+              <div>
+                <label style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">Student Name</label>
+                <input type="text" id="sp-input-profile-name" required value="Learner" oninput="spUpdateInitialsPreview(this.value)" style="width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid #bfdbfe; border-radius: 8px;">
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                  <label style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">Grade Level</label>
+                  <input type="text" id="sp-input-profile-grade" value="Junior High School (Grade 9)" readonly style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #bfdbfe; border-radius: 8px; background: #f8fafc; color: #475569;">
+                </div>
+                <div>
+                  <label style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">Section</label>
+                  <input type="text" id="sp-input-profile-section" value=""
+                   style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #bfdbfe; border-radius: 8px;">
+                </div>
+              </div>
+
+              <div>
+                <label style="display: block; font-size: 12px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">Adviser Name</label>
+                <input type="text" id="sp-input-profile-adviser" value="" placeholder="Optional" style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #bfdbfe; border-radius: 8px;">
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px;">
+                <button type="button" onclick="spCloseModals()" class="sp-btn-secondary">Cancel</button>
+                <button type="submit" class="sp-btn-primary">Save Profile</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       7. FOOTER
+       =================================================================== -->
+  <footer class="site-footer">
+    <div class="site-container">
+      <p style="margin-bottom: 6px; font-weight: 600; color: #1e3a8a;">
+        S.T.U.D.Y. &middot; Student Time Updates and Daily Yield-tracker
+      </p>
+      <p>Made for Grade 9 students &middot; Pure Standalone HTML &amp; Vanilla JavaScript &middot; Zero Dependencies</p>
+    </div>
+  </footer>
+
+  <!-- ===================================================================
+       8. JAVASCRIPT: SMOOTH SCROLL, LOCALSTORAGE & INTERACTIVE APP
+       =================================================================== -->
+  <script>
+    // Smooth scroll to portal when clicking Explore Now
+    function scrollToPortal() {
+      var portalSection = document.getElementById('study-portal-section');
+      if (portalSection) {
+        portalSection.scrollIntoView({ behavior: 'smooth' });
+        var appRoot = document.getElementById('study-app-root');
+        if (appRoot) {
+          appRoot.classList.add('portal-highlight-pulse');
+          setTimeout(function() {
+            appRoot.classList.remove('portal-highlight-pulse');
+          }, 1500);
+        }
+      }
+    }
+
+    (function() {
+      var STORAGE_KEY_TASKS = 'study_portal_tasks_v2';
+      var STORAGE_KEY_PROFILE = 'study_portal_profile_v2';
+      var STORAGE_KEY_REF = 'study_portal_reflections_v2';
+      var STORAGE_KEY_CALENDAR = 'study_portal_calendar_v1';
+      var STORAGE_KEY_REMINDERS = 'study_portal_reminders_v1';
+
+      var currentTasks = [];
+      try {
+        var saved = localStorage.getItem(STORAGE_KEY_TASKS);
+        currentTasks = saved ? JSON.parse(saved) : [];
+        if (!Array.isArray(currentTasks)) currentTasks = [];
+        currentTasks = currentTasks.filter(function(task) {
+          return ['task-1', 'task-2', 'task-3', 'task-4'].indexOf(task.id) === -1;
+        });
+      } catch(e) {
+        currentTasks = [];
+      }
+
+      var currentProfile = {
+        name: 'Learner',
+        grade: 'Junior High School (Grade 9)',
+        section: '',
+        adviser: ''
+      };
+      try {
+        var pSaved = localStorage.getItem(STORAGE_KEY_PROFILE);
+        if (pSaved) {
+          currentProfile = Object.assign(currentProfile, JSON.parse(pSaved));
+          currentProfile.grade = 'Junior High School (Grade 9)';
+          if (!currentProfile.name || currentProfile.name === 'Learner 01' || currentProfile.name === 'Alex Rivera') currentProfile.name = 'Learner';
+          if (currentProfile.section === 'Section Patience' || currentProfile.section === 'Section St. Jude') currentProfile.section = '';
+          if (currentProfile.adviser === 'Ms. Ido' || currentProfile.adviser === 'Mrs. Santos') currentProfile.adviser = '';
+        }
+      } catch(e) {}
+
+      var currentFilter = 'all';
+      var calendarMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+      var selectedCalendarDate = formatCalendarDate(new Date());
+      var calendarEvents = [];
+      try {
+        var savedCalendar = localStorage.getItem(STORAGE_KEY_CALENDAR);
+        calendarEvents = savedCalendar ? JSON.parse(savedCalendar) : [];
+        if (!Array.isArray(calendarEvents)) calendarEvents = [];
+        calendarEvents = calendarEvents.filter(function(item) {
+          return item && typeof item.id === 'string' &&
+            typeof item.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(item.date) &&
+            typeof item.title === 'string';
+        });
+      } catch(e) {
+        calendarEvents = [];
+      }
+
+      function setStorageStatus(message, isError) {
+        var status = document.getElementById('sp-storage-status');
+        if (status) {
+          status.innerText = message;
+          status.style.color = isError ? '#b91c1c' : '#475569';
+        }
+      }
+
+      function persistLocal(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+          setStorageStatus('Saved in this browser on this device.', false);
+          return true;
+        } catch(error) {
+          setStorageStatus('Could not save in this browser. Download a backup or free storage space.', true);
+          return false;
+        }
+      }
+
+      function localDateKey(date) {
+        return date.getFullYear() + '-' +
+          String(date.getMonth() + 1).padStart(2, '0') + '-' +
+          String(date.getDate()).padStart(2, '0');
+      }
+
+      function isDateKey(value) {
+        if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+        var parts = value.split('-').map(Number);
+        var date = new Date(parts[0], parts[1] - 1, parts[2]);
+        return date.getFullYear() === parts[0] &&
+          date.getMonth() === parts[1] - 1 &&
+          date.getDate() === parts[2];
+      }
+
+      window.spDismissGuide = function() {
+        var guide = document.getElementById('sp-first-use-guide');
+        if (guide) guide.open = false;
+        try {
+          localStorage.setItem('study_portal_guide_dismissed_v1', 'true');
+        } catch(error) {
+          setStorageStatus('The guide was closed, but this preference could not be saved.', true);
+        }
+      };
+
+      window.spExportBackup = function() {
+        var backup = {
+          version: 1,
+          exportedAt: new Date().toISOString(),
+          tasks: currentTasks,
+          profile: currentProfile,
+          calendar: calendarEvents,
+          reflection: null
+        };
+        try {
+          var reflection = localStorage.getItem(STORAGE_KEY_REF);
+          backup.reflection = reflection ? JSON.parse(reflection) : null;
+        } catch(error) {
+          setStorageStatus('Could not read the saved reflection for backup.', true);
+          return;
+        }
+
+        var file = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(file);
+        link.download = 'study-planner-backup-' + localDateKey(new Date()) + '.json';
+        link.click();
+        window.setTimeout(function() { URL.revokeObjectURL(link.href); }, 1000);
+        setStorageStatus('Backup downloaded. Keep it private; it contains your planner data.', false);
+      };
+
+      window.spImportBackup = function(event) {
+        var input = event.target;
+        var file = input.files && input.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function() {
+          try {
+            var backup = JSON.parse(String(reader.result));
+            var validTasks = backup && backup.version === 1 && Array.isArray(backup.tasks) &&
+              backup.tasks.every(function(task) {
+                return task && typeof task.id === 'string' && /^[A-Za-z0-9_-]+$/.test(task.id) &&
+                typeof task.title === 'string' && typeof task.done === 'boolean' &&
+                (task.subject === undefined || typeof task.subject === 'string') &&
+                (task.time === undefined || typeof task.time === 'string') &&
+                (task.due === undefined || typeof task.due === 'string') &&
+                (task.dueDate === undefined || task.dueDate === '' || isDateKey(task.dueDate)) &&
+                (task.dueTime === undefined || task.dueTime === '' ||
+                  (typeof task.dueTime === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(task.dueTime))) &&
+                (task.priority === undefined || ['high', 'medium', 'low'].indexOf(task.priority) !== -1);
+            });
+            var validCalendar = backup && Array.isArray(backup.calendar) &&
+            backup.calendar.every(function(item) {
+              return item && typeof item.id === 'string' && /^[A-Za-z0-9_-]+$/.test(item.id) &&
+                typeof item.title === 'string' && isDateKey(item.date) &&
+                (item.time === undefined || typeof item.time === 'string');
+            });
+            var validProfile = backup && backup.profile &&
+            typeof backup.profile.name === 'string' && typeof backup.profile.grade === 'string' &&
+            (backup.profile.section === undefined || typeof backup.profile.section === 'string') &&
+            (backup.profile.adviser === undefined || typeof backup.profile.adviser === 'string');
+            if (!validTasks || !validCalendar || !validProfile ||
+              (backup.reflection !== null && backup.reflection !== undefined &&
+                (typeof backup.reflection !== 'object' || Array.isArray(backup.reflection) ||
+                  ['wins', 'roadblock', 'goal'].some(function(field) {
+                    return backup.reflection[field] !== undefined && typeof backup.reflection[field] !== 'string';
+                  })))) {
+              throw new Error('The selected file is not a valid planner backup.');
+            }
+            if (!window.confirm('Restore this backup on this device? It will replace the planner data currently saved here.')) return;
+
+            var backupKeys = [STORAGE_KEY_TASKS, STORAGE_KEY_PROFILE, STORAGE_KEY_CALENDAR, STORAGE_KEY_REF];
+            var backupValues = [
+              JSON.stringify(backup.tasks),
+              JSON.stringify(backup.profile),
+              JSON.stringify(backup.calendar),
+              backup.reflection ? JSON.stringify(backup.reflection) : null
+            ];
+            var previousValues = backupKeys.map(function(key) { return localStorage.getItem(key); });
+            try {
+              backupKeys.forEach(function(key, index) {
+                if (backupValues[index] === null) localStorage.removeItem(key);
+                else localStorage.setItem(key, backupValues[index]);
+              });
+            } catch(error) {
+              var rollbackFailed = false;
+              backupKeys.forEach(function(key, index) {
+                try {
+                  if (previousValues[index] === null) localStorage.removeItem(key);
+                  else localStorage.setItem(key, previousValues[index]);
+                } catch(rollbackError) {
+                  rollbackFailed = true;
+                }
+              });
+              setStorageStatus(rollbackFailed
+                ? 'Backup restore failed and this browser could not restore all previous data. Do not close this page yet.'
+                : 'Backup restore failed. Previous planner data was restored.', true);
+              return;
+            }
+            window.location.reload();
+          } catch(error) {
+            setStorageStatus(error instanceof SyntaxError
+              ? 'Could not read that backup file. Choose a valid planner JSON backup.'
+              : error.message, true);
+          } finally {
+            input.value = '';
+          }
+        };
+        reader.onerror = function() {
+          setStorageStatus('Could not read the selected backup file.', true);
+          input.value = '';
+        };
+        reader.readAsText(file);
+      };
+
+      function checkDeadlineReminders() {
+        if (!('Notification' in window) || Notification.permission !== 'granted') return;
+        var today = new Date();
+        var tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        var todayKey = localDateKey(today);
+        var tomorrowKey = localDateKey(tomorrow);
+        currentTasks.forEach(function(task) {
+          if (task.done || !task.dueDate) return;
+          var reminderType = '';
+          if (task.dueDate === tomorrowKey) {
+            reminderType = 'tomorrow';
+          } else if (task.dueDate === todayKey) {
+            if (task.dueTime) {
+              var timeParts = task.dueTime.split(':').map(Number);
+              var deadline = new Date(today);
+              deadline.setHours(timeParts[0], timeParts[1], 0, 0);
+              var minutesLeft = Math.ceil((deadline.getTime() - Date.now()) / 60000);
+              if (minutesLeft <= 0) return;
+              reminderType = minutesLeft <= 60 ? 'last-hour' : 'today';
+            } else {
+              reminderType = 'today';
+            }
+          } else {
+            return;
+          }
+          var reminderKey = STORAGE_KEY_REMINDERS + '_' + task.id + '_' + task.dueDate + '_' + reminderType;
+          try {
+            if (localStorage.getItem(reminderKey)) return;
+          } catch(error) {
+            setStorageStatus('Could not check saved deadline reminders in this browser.', true);
+            return;
+          }
+          try {
+            var reminderTitle = reminderType === 'tomorrow' ? 'Assignment due tomorrow' :
+              (reminderType === 'last-hour' ? 'Assignment due within an hour' : 'Assignment due today');
+            new Notification(reminderTitle, {
+              body: task.title,
+              tag: reminderKey
+            });
+            localStorage.setItem(reminderKey, 'true');
+          } catch(error) {
+            setStorageStatus('Could not show a deadline notification in this browser.', true);
+          }
+        });
+      }
+
+      window.spEnableReminders = function() {
+        if (!('Notification' in window)) {
+          setStorageStatus('This browser does not support desktop notifications. Use the planner task list for due dates.', true);
+          return;
+        }
+        if (!window.isSecureContext && location.protocol !== 'file:') {
+          setStorageStatus('Browser reminders need a secure HTTPS website.', true);
+          return;
+        }
+        Notification.requestPermission().then(function(permission) {
+          if (permission === 'granted') {
+            setStorageStatus('Reminders enabled. Due-date alerts appear when you open this planner.', false);
+            checkDeadlineReminders();
+          } else {
+            setStorageStatus('Notifications were not enabled. You can still see due dates in your task list.', true);
+          }
+        }).catch(function() {
+          setStorageStatus('Could not request notification permission in this browser.', true);
+        });
+      };
+
+      function formatCalendarDate(date) {
+        return date.getFullYear() + '-' +
+          String(date.getMonth() + 1).padStart(2, '0') + '-' +
+          String(date.getDate()).padStart(2, '0');
+      }
+
+      function parseCalendarDate(dateString) {
+        var parts = dateString.split('-').map(Number);
+        return new Date(parts[0], parts[1] - 1, parts[2]);
+      }
+
+      function renderCalendarEvents() {
+        var selectedLabel = document.getElementById('sp-calendar-selected-date');
+        var eventsContainer = document.getElementById('sp-calendar-events');
+        if (!selectedLabel || !eventsContainer) return;
+
+        var selectedDate = parseCalendarDate(selectedCalendarDate);
+        selectedLabel.innerText = selectedDate.toLocaleDateString(undefined, {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+
+        var dayEvents = calendarEvents.filter(function(item) {
+          return item.date === selectedCalendarDate;
+        }).sort(function(a, b) {
+          return (a.time || '').localeCompare(b.time || '');
+        });
+
+        eventsContainer.innerHTML = '';
+        if (dayEvents.length === 0) {
+          var empty = document.createElement('p');
+          empty.className = 'sp-calendar-empty';
+          empty.innerText = 'Nothing scheduled for this day.';
+          eventsContainer.appendChild(empty);
+          return;
+        }
+
+        dayEvents.forEach(function(item) {
+          var row = document.createElement('div');
+          row.className = 'sp-calendar-event-row';
+          var description = document.createElement('span');
+          if (item.time) {
+            var time = document.createElement('span');
+            time.className = 'sp-calendar-event-time';
+            time.innerText = item.time;
+            description.appendChild(time);
+          }
+          var title = document.createElement('span');
+          title.innerText = item.title;
+          description.appendChild(title);
+
+          var remove = document.createElement('button');
+          remove.type = 'button';
+          remove.className = 'sp-btn-secondary';
+          remove.innerText = 'Remove';
+          remove.setAttribute('aria-label', 'Remove ' + item.title);
+          remove.onclick = function() { window.spDeleteCalendarEvent(item.id); };
+          row.appendChild(description);
+          row.appendChild(remove);
+          eventsContainer.appendChild(row);
+        });
+      }
+
+      window.spRenderCalendar = function() {
+        var grid = document.getElementById('sp-calendar-grid');
+        var monthLabel = document.getElementById('sp-calendar-month-label');
+        if (!grid || !monthLabel) return;
+
+        monthLabel.innerText = calendarMonth.toLocaleDateString(undefined, {
+          month: 'long', year: 'numeric'
+        });
+        grid.innerHTML = '';
+
+        var firstDay = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1);
+        var startDate = new Date(firstDay);
+        startDate.setDate(firstDay.getDate() - firstDay.getDay());
+        var today = formatCalendarDate(new Date());
+
+        for (var i = 0; i < 42; i++) {
+          var date = new Date(startDate);
+          date.setDate(startDate.getDate() + i);
+          var dateKey = formatCalendarDate(date);
+          var dayButton = document.createElement('button');
+          dayButton.type = 'button';
+          dayButton.className = 'sp-calendar-day';
+          if (date.getMonth() !== calendarMonth.getMonth()) dayButton.classList.add('other-month');
+          if (dateKey === today) dayButton.classList.add('today');
+          if (dateKey === selectedCalendarDate) dayButton.classList.add('selected');
+          dayButton.setAttribute('aria-label', date.toLocaleDateString(undefined, {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+          }));
+          dayButton.setAttribute('aria-pressed', dateKey === selectedCalendarDate ? 'true' : 'false');
+
+          var dayNumber = document.createElement('span');
+          dayNumber.className = 'sp-calendar-day-number';
+          dayNumber.innerText = String(date.getDate());
+          dayButton.appendChild(dayNumber);
+
+          calendarEvents.filter(function(item) {
+            return item.date === dateKey;
+          }).slice(0, 2).forEach(function(item) {
+            var eventLabel = document.createElement('span');
+            eventLabel.className = 'sp-calendar-day-event';
+            eventLabel.innerText = item.title;
+            dayButton.appendChild(eventLabel);
+          });
+
+          dayButton.onclick = function(key, selectedDay) {
+            return function() {
+              selectedCalendarDate = key;
+              calendarMonth = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), 1);
+              window.spRenderCalendar();
+            };
+          }(dateKey, date);
+          grid.appendChild(dayButton);
+        }
+
+        renderCalendarEvents();
+      };
+
+      window.spChangeCalendarMonth = function(offset) {
+        calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + offset, 1);
+        selectedCalendarDate = formatCalendarDate(calendarMonth);
+        window.spRenderCalendar();
+      };
+
+      window.spAddCalendarEvent = function(event) {
+        event.preventDefault();
+        var titleInput = document.getElementById('sp-calendar-event-title');
+        var timeInput = document.getElementById('sp-calendar-event-time');
+        var status = document.getElementById('sp-calendar-status');
+        var title = titleInput.value.trim();
+        if (!title) {
+          status.innerText = 'Enter a schedule title first.';
+          return;
+        }
+
+        var schedule = {
+          id: 'schedule-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+          date: selectedCalendarDate,
+          title: title,
+          time: timeInput.value
+        };
+        calendarEvents.push(schedule);
+        if (!persistLocal(STORAGE_KEY_CALENDAR, calendarEvents)) {
+          calendarEvents.pop();
+          status.innerText = 'Could not save this schedule in this browser.';
+          return;
+        }
+
+        titleInput.value = '';
+        timeInput.value = '';
+        status.innerText = 'Schedule saved.';
+        window.spRenderCalendar();
+        status.innerText = 'Schedule saved.';
+      };
+
+      window.spDeleteCalendarEvent = function(eventId) {
+        var previousEvents = calendarEvents;
+        calendarEvents = calendarEvents.filter(function(item) { return item.id !== eventId; });
+        if (!persistLocal(STORAGE_KEY_CALENDAR, calendarEvents)) {
+          calendarEvents = previousEvents;
+          var status = document.getElementById('sp-calendar-status');
+          if (status) status.innerText = 'Could not remove this schedule from this browser.';
+          return;
+        }
+        window.spRenderCalendar();
+      };
+
+      function getInitials(name) {
+        if (!name) return 'S';
+        var parts = name.trim().split(/\s+/);
+        if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+        var lastPart = parts[parts.length - 1];
+        var lastInitial = /^\d+$/.test(lastPart) ? String(parseInt(lastPart, 10)) : lastPart[0];
+        return (parts[0][0] + lastInitial).toUpperCase();
+      }
+
+      window.spRenderProfile = function() {
+        var initials = getInitials(currentProfile.name);
+        var initEl = document.getElementById('sp-avatar-initials');
+        var nameEl = document.getElementById('sp-name-heading');
+        var gradeEl = document.getElementById('sp-grade-display');
+        var secEl = document.getElementById('sp-section-display');
+        var advEl = document.getElementById('sp-adviser-display');
+        var secSeparator = document.getElementById('sp-section-separator');
+        var advSeparator = document.getElementById('sp-adviser-separator');
+
+        if (initEl) initEl.innerText = initials;
+        if (nameEl) nameEl.innerText = 'Welcome, ' + currentProfile.name + '!';
+        if (gradeEl) gradeEl.innerText = currentProfile.grade;
+        if (secEl) {
+          secEl.innerText = currentProfile.section;
+          secEl.style.display = currentProfile.section ? '' : 'none';
+        }
+        if (advEl) {
+          advEl.innerText = currentProfile.adviser ? 'Adviser: ' + currentProfile.adviser : '';
+          advEl.style.display = currentProfile.adviser ? '' : 'none';
+        }
+        if (secSeparator) secSeparator.style.display = currentProfile.section || currentProfile.adviser ? '' : 'none';
+        if (advSeparator) advSeparator.style.display = currentProfile.section && currentProfile.adviser ? '' : 'none';
+      };
+
+      window.spRenderTasks = function() {
+        var container = document.getElementById('sp-tasks-list');
+        if (!container) return;
+        container.innerHTML = '';
+
+        var filtered = currentTasks.filter(function(t) {
+          if (currentFilter === 'pending') return !t.done;
+          if (currentFilter === 'done') return t.done;
+          return true;
+        });
+        var priorityRank = { high: 0, medium: 1, low: 2 };
+        filtered.sort(function(a, b) {
+          if (a.done !== b.done) return a.done ? 1 : -1;
+          var priorityDifference = (priorityRank[a.priority] === undefined ? 1 : priorityRank[a.priority]) -
+            (priorityRank[b.priority] === undefined ? 1 : priorityRank[b.priority]);
+          if (priorityDifference) return priorityDifference;
+          var dueA = a.dueDate || '9999-12-31';
+          var dueB = b.dueDate || '9999-12-31';
+          return dueA.localeCompare(dueB);
+        });
+
+        if (filtered.length === 0) {
+          var emptyMessage = currentTasks.length === 0
+            ? 'No assignments yet. Add a task when you are ready.'
+            : 'No tasks found in this filter.';
+          container.innerHTML = '<div style="text-align: center; padding: 28px; color: #64748b; font-size: 13px;">' + emptyMessage + '</div>';
+        } else {
+          for (var i = 0; i < filtered.length; i++) {
+            var t = filtered[i];
+            var row = document.createElement('div');
+            row.className = 'sp-task-row' + (t.done ? ' done' : '');
+            row.id = 'row-' + t.id;
+            var taskInfo = document.createElement('div');
+            taskInfo.style.cssText = 'display: flex; align-items: center; gap: 12px; flex: 1;';
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = Boolean(t.done);
+            checkbox.setAttribute('aria-label', 'Mark ' + t.title + ' complete');
+            checkbox.style.cssText = 'width: 18px; height: 18px; cursor: pointer; accent-color: #2563eb;';
+            checkbox.onchange = function(taskId) {
+              return function() { window.spToggleTaskDone(taskId); };
+            }(t.id);
+            var text = document.createElement('div');
+            var title = document.createElement('div');
+            title.className = 'sp-task-title';
+            title.style.cssText = 'font-size: 14px; font-weight: 700; color: #0f172a;';
+            title.innerText = t.title;
+            var details = document.createElement('div');
+            details.style.cssText = 'font-size: 11px; color: #64748b; margin-top: 2px;';
+            var subject = document.createElement('span');
+            subject.style.cssText = 'font-weight: 700; color: #1d4ed8;';
+            subject.innerText = t.subject || 'General';
+            var deadline = document.createElement('span');
+            deadline.innerText = t.dueDate
+              ? 'Due ' + new Date(t.dueDate + 'T00:00:00').toLocaleDateString() + (t.dueTime ? ' at ' + t.dueTime : '')
+              : (t.due || 'No deadline');
+            var priority = document.createElement('span');
+            var priorityValue = ['high', 'medium', 'low'].indexOf(t.priority) === -1 ? 'medium' : t.priority;
+            priority.innerText = priorityValue.charAt(0).toUpperCase() + priorityValue.slice(1) + ' priority';
+            var estimate = document.createElement('span');
+            estimate.style.fontFamily = 'monospace';
+            estimate.innerText = t.time || '25m';
+            details.appendChild(subject);
+            details.appendChild(document.createTextNode(' · '));
+            details.appendChild(deadline);
+            details.appendChild(document.createTextNode(' · '));
+            details.appendChild(priority);
+            details.appendChild(document.createTextNode(' · '));
+            details.appendChild(estimate);
+            text.appendChild(title);
+            text.appendChild(details);
+            taskInfo.appendChild(checkbox);
+            taskInfo.appendChild(text);
+
+            var actions = document.createElement('div');
+            actions.style.cssText = 'display: flex; align-items: center; gap: 8px;';
+            var focus = document.createElement('button');
+            focus.type = 'button';
+            focus.className = 'sp-btn-secondary';
+            focus.style.cssText = 'font-size: 11px; padding: 4px 8px;';
+            focus.innerText = 'Focus';
+            focus.onclick = function(taskTitle) {
+              return function() { window.spStartFocusForTask(taskTitle); };
+            }(t.title);
+            var remove = document.createElement('button');
+            remove.type = 'button';
+            remove.style.cssText = 'background: none; border: none; color: #94a3b8; font-size: 16px; cursor: pointer; padding: 4px;';
+            remove.title = 'Delete task';
+            remove.setAttribute('aria-label', 'Delete ' + t.title);
+            remove.innerText = '×';
+            remove.onclick = function(taskId) {
+              return function() { window.spDeleteTask(taskId); };
+            }(t.id);
+            actions.appendChild(focus);
+            actions.appendChild(remove);
+            row.appendChild(taskInfo);
+            row.appendChild(actions);
+            container.appendChild(row);
+          }
+        }
+
+        var pendingCount = currentTasks.filter(function(t) { return !t.done; }).length;
+        var doneCount = currentTasks.filter(function(t) { return t.done; }).length;
+        var yieldPct = currentTasks.length > 0 ? Math.round((doneCount / currentTasks.length) * 100) : 0;
+        var completedDays = {};
+        currentTasks.forEach(function(task) {
+          if (task.done && task.completedAt) {
+            var completed = new Date(task.completedAt);
+            if (!isNaN(completed.getTime())) completedDays[localDateKey(completed)] = true;
+          }
+        });
+        var streak = 0;
+        var streakDate = new Date();
+        if (!completedDays[localDateKey(streakDate)]) streakDate.setDate(streakDate.getDate() - 1);
+        while (completedDays[localDateKey(streakDate)]) {
+          streak++;
+          streakDate.setDate(streakDate.getDate() - 1);
+        }
+
+        var pMetric = document.getElementById('sp-metric-pending');
+        var yMetric = document.getElementById('sp-metric-yield');
+        var tabCount = document.getElementById('sp-tab-task-count');
+        var streakMetric = document.getElementById('sp-metric-streak');
+        var overviewStreak = document.getElementById('sp-overview-streak');
+
+        if (pMetric) pMetric.innerHTML = pendingCount + ' <span style="font-size: 12px; font-weight: 500; color: #64748b;">tasks</span>';
+        if (yMetric) yMetric.innerText = yieldPct + '%';
+        if (tabCount) tabCount.innerText = pendingCount;
+        var streakLabel = streak + ' ' + (streak === 1 ? 'day' : 'days');
+        if (streakMetric) streakMetric.innerHTML = streak + ' <span style="font-size: 12px; font-weight: 500; color: #64748b;">' + (streak === 1 ? 'day' : 'days') + '</span>';
+        if (overviewStreak) overviewStreak.innerText = streakLabel;
+        checkDeadlineReminders();
+      };
+
+      window.spToggleTaskDone = function(taskId) {
+        for (var i = 0; i < currentTasks.length; i++) {
+          if (currentTasks[i].id === taskId) {
+            var wasDone = currentTasks[i].done;
+            var previousCompletedAt = currentTasks[i].completedAt;
+            currentTasks[i].done = !wasDone;
+            if (currentTasks[i].done) currentTasks[i].completedAt = new Date().toISOString();
+            else delete currentTasks[i].completedAt;
+            if (!persistLocal(STORAGE_KEY_TASKS, currentTasks)) {
+              currentTasks[i].done = wasDone;
+              if (previousCompletedAt) currentTasks[i].completedAt = previousCompletedAt;
+              else delete currentTasks[i].completedAt;
+            }
+            break;
+          }
+        }
+        spRenderTasks();
+      };
+
+      window.spDeleteTask = function(taskId) {
+        var previousTasks = currentTasks;
+        currentTasks = currentTasks.filter(function(t) { return t.id !== taskId; });
+        if (!persistLocal(STORAGE_KEY_TASKS, currentTasks)) currentTasks = previousTasks;
+        spRenderTasks();
+      };
+
+      window.spFilterTasks = function(filter) {
+        currentFilter = filter;
+        ['all', 'pending', 'done'].forEach(function(f) {
+          var btn = document.getElementById('sp-filter-' + f);
+          if (btn) {
+            btn.className = (f === filter) ? 'sp-btn-primary' : 'sp-btn-secondary';
+          }
+        });
+        spRenderTasks();
+      };
+
+      window.spSwitchTab = function(tabName) {
+        var tabs = ['overview', 'tasks', 'timer', 'calendar', 'reflection'];
+        tabs.forEach(function(t) {
+          var view = document.getElementById('sp-view-' + t);
+          var btn = document.getElementById('sp-tab-btn-' + t);
+          if (view) view.style.display = (t === tabName) ? 'block' : 'none';
+          if (btn) {
+            if (t === tabName) btn.classList.add('active');
+            else btn.classList.remove('active');
+          }
+        });
+        if (tabName === 'calendar') window.spRenderCalendar();
+      };
+
+      var timerSeconds = 25 * 60;
+      var timerInterval = null;
+      var isTimerRunning = false;
+
+      function formatTime(s) {
+        var m = Math.floor(s / 60);
+        var rem = s % 60;
+        return (m < 10 ? '0' : '') + m + ':' + (rem < 10 ? '0' : '') + rem;
+      }
+
+      window.spSetTimerMinutes = function(mins) {
+        mins = Number(mins);
+        if (!Number.isInteger(mins) || mins < 1 || mins > 180) return;
+        if (isTimerRunning) spToggleTimer();
+        timerSeconds = mins * 60;
+        document.getElementById('sp-timer-display').innerText = formatTime(timerSeconds);
+        document.getElementById('sp-timer-label').innerText = mins + '-minute interval set';
+
+        var customBtn = document.getElementById('sp-timer-btn-custom');
+        if (customBtn) customBtn.className = 'sp-btn-secondary';
+        [25, 15, 5].forEach(function(m) {
+          var btn = document.getElementById('sp-timer-btn-' + m);
+          if (btn) btn.className = (m === mins) ? 'sp-btn-primary' : 'sp-btn-secondary';
+        });
+      };
+
+      window.spSetCustomTimer = function(event) {
+        event.preventDefault();
+        var input = document.getElementById('sp-custom-timer-minutes');
+        var mins = Number(input.value);
+        if (!input.checkValidity() || !Number.isInteger(mins) || mins < 1 || mins > 180) {
+          input.reportValidity();
+          return;
+        }
+
+        window.spSetTimerMinutes(mins);
+        var customBtn = document.getElementById('sp-timer-btn-custom');
+        if (customBtn) customBtn.className = 'sp-btn-primary';
+      };
+
+      window.spToggleTimer = function() {
+        var btn = document.getElementById('sp-timer-toggle-btn');
+        var label = document.getElementById('sp-timer-label');
+
+        if (isTimerRunning) {
+          clearInterval(timerInterval);
+          isTimerRunning = false;
+          if (btn) btn.innerHTML = 'Resume Focus';
+          if (label) label.innerText = 'Timer paused';
+        } else {
+          isTimerRunning = true;
+          if (btn) btn.innerHTML = 'Pause';
+          if (label) label.innerText = 'Focus in session';
+          timerInterval = setInterval(function() {
+            timerSeconds--;
+            document.getElementById('sp-timer-display').innerText = formatTime(timerSeconds);
+            if (timerSeconds <= 0) {
+              clearInterval(timerInterval);
+              isTimerRunning = false;
+              if (btn) btn.innerHTML = 'Start Focus';
+              if (label) label.innerText = 'Sprint Complete! Great work!';
+            }
+          }, 1000);
+        }
+      };
+
+      window.spResetTimer = function() {
+        if (isTimerRunning) {
+          clearInterval(timerInterval);
+          isTimerRunning = false;
+        }
+        timerSeconds = 25 * 60;
+        document.getElementById('sp-timer-display').innerText = formatTime(timerSeconds);
+        document.getElementById('sp-timer-toggle-btn').innerHTML = 'Start Focus';
+        document.getElementById('sp-timer-label').innerText = 'Ready to focus!';
+        var customBtn = document.getElementById('sp-timer-btn-custom');
+        if (customBtn) customBtn.className = 'sp-btn-secondary';
+        [25, 15, 5].forEach(function(m) {
+          var btn = document.getElementById('sp-timer-btn-' + m);
+          if (btn) btn.className = (m === 25) ? 'sp-btn-primary' : 'sp-btn-secondary';
+        });
+      };
+
+      window.spStartFocusForTask = function(taskTitle) {
+        spSwitchTab('timer');
+        spSetTimerMinutes(25);
+        document.getElementById('sp-timer-label').innerText = 'Focusing on: ' + taskTitle;
+      };
+
+      window.spOpenAddTaskModal = function() {
+        document.getElementById('sp-modal-add-task').style.display = 'flex';
+      };
+      window.spOpenProfileModal = function() {
+        document.getElementById('sp-input-profile-name').value = currentProfile.name;
+        document.getElementById('sp-input-profile-grade').value = 'Junior High School (Grade 9)';
+        document.getElementById('sp-input-profile-section').value = currentProfile.section.replace('Section ', '');
+        document.getElementById('sp-input-profile-adviser').value = currentProfile.adviser;
+        spUpdateInitialsPreview(currentProfile.name);
+        document.getElementById('sp-modal-profile').style.display = 'flex';
+      };
+      window.spCloseModals = function() {
+        document.getElementById('sp-modal-add-task').style.display = 'none';
+        document.getElementById('sp-modal-profile').style.display = 'none';
+      };
+
+      window.spUpdateInitialsPreview = function(val) {
+        var p = document.getElementById('sp-modal-initials-preview');
+        if (p) p.innerText = getInitials(val);
+      };
+
+      window.spSubmitNewTask = function(e) {
+        e.preventDefault();
+        var title = document.getElementById('sp-input-task-title').value;
+        var subject = document.getElementById('sp-input-task-subject').value;
+        var time = document.getElementById('sp-input-task-time').value;
+        var dueDate = document.getElementById('sp-input-task-due').value;
+        var dueTime = document.getElementById('sp-input-task-due-time').value;
+        var priority = document.getElementById('sp-input-task-priority').value;
+
+        var newTask = {
+          id: 'task-' + Date.now(),
+          title: title,
+          subject: subject,
+          time: time,
+          due: dueDate ? '' : 'No deadline',
+          dueDate: dueDate,
+          dueTime: dueTime,
+          priority: priority,
+          done: false
+        };
+
+        currentTasks.unshift(newTask);
+        if (!persistLocal(STORAGE_KEY_TASKS, currentTasks)) {
+          currentTasks.shift();
+          return;
+        }
+        spCloseModals();
+        spRenderTasks();
+        document.getElementById('sp-input-task-title').value = '';
+        document.getElementById('sp-input-task-due').value = '';
+        document.getElementById('sp-input-task-due-time').value = '';
+        document.getElementById('sp-input-task-priority').value = 'medium';
+      };
+
+      window.spSaveProfile = function(e) {
+        e.preventDefault();
+        var name = document.getElementById('sp-input-profile-name').value.trim() || 'Learner';
+        var grade = 'Junior High School (Grade 9)';
+        var section = document.getElementById('sp-input-profile-section').value.trim();
+        var adviser = document.getElementById('sp-input-profile-adviser').value.trim();
+
+        var previousProfile = currentProfile;
+        currentProfile = {
+          name: name,
+          grade: grade,
+          section: section ? 'Section ' + section : '',
+          adviser: adviser
+        };
+
+        if (!persistLocal(STORAGE_KEY_PROFILE, currentProfile)) {
+          currentProfile = previousProfile;
+          return;
+        }
+        spRenderProfile();
+        spCloseModals();
+      };
+
+      window.spSaveReflection = function(e) {
+        e.preventDefault();
+        var wins = document.getElementById('sp-ref-wins').value;
+        var rb = document.getElementById('sp-ref-roadblock').value;
+        var goal = document.getElementById('sp-ref-goal').value;
+
+        var data = { wins: wins, roadblock: rb, goal: goal, date: new Date().toISOString() };
+        if (!persistLocal(STORAGE_KEY_REF, data)) return;
+
+        var status = document.getElementById('sp-ref-status');
+        if (status) {
+          status.style.display = 'inline';
+          status.innerText = 'Saved in this browser on this device.';
+          setTimeout(function() { status.style.display = 'none'; }, 3000);
+        }
+      };
+
+      try {
+        var refSaved = localStorage.getItem(STORAGE_KEY_REF);
+        if (refSaved) {
+          var rData = JSON.parse(refSaved);
+          if (document.getElementById('sp-ref-wins')) document.getElementById('sp-ref-wins').value = rData.wins || '';
+          if (document.getElementById('sp-ref-roadblock')) document.getElementById('sp-ref-roadblock').value = rData.roadblock || '';
+          if (document.getElementById('sp-ref-goal')) document.getElementById('sp-ref-goal').value = rData.goal || '';
+        }
+      } catch(e) {}
+
+      try {
+        if (localStorage.getItem('study_portal_guide_dismissed_v1') === 'true') {
+          document.getElementById('sp-first-use-guide').open = false;
+        }
+        setStorageStatus('Your planner is saved in this browser on this device.', false);
+      } catch(error) {
+        setStorageStatus('Browser storage is unavailable. Your changes may not be saved.', true);
+      }
+
+      spRenderProfile();
+      spRenderTasks();
+      window.spRenderCalendar();
+      window.addEventListener('focus', checkDeadlineReminders);
+      window.setInterval(checkDeadlineReminders, 60000);
+    })();
+
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js').catch(function() {
+          var status = document.getElementById('sp-storage-status');
+          if (status) {
+            status.innerText = 'Offline support could not start. Open the hosted HTTPS link while online, then try again.';
+            status.style.color = '#b91c1c';
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>
